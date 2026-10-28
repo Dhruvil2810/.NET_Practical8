@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<Practical8.Models.Product>
+
+@{
+    ViewBag.Title = "Inventory Management";
+}
+
+<h2>Inventory Management</h2>
+
+<p>
+    @Html.ActionLink("Create Product", "Create", "Product",
+        null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.ProductName</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price.ToString("0.00")</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit",
+                        new { id = product.ProductId })
+                </td>
+                <td>
+                    @using (Html.BeginForm("Delete", "Product",
+                        new { id = product.ProductId },
+                        FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit"
+                                class="btn btn-danger"
+                                onclick="return confirm('Delete this product?');">
+                            Delete
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

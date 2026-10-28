@@ -1,0 +1,54 @@
+﻿
+@model Practical8.Models.Product
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+<h2>Edit Product</h2>
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.ProductId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductName)
+        @Html.TextBoxFor(m => m.ProductName,
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ProductName, "",
+            new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Quantity)
+        @Html.TextBoxFor(m => m.Quantity,
+            new { @class = "form-control", type = "number", min = "0" })
+        @Html.ValidationMessageFor(m => m.Quantity, "",
+            new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price)
+        @Html.TextBoxFor(m => m.Price,
+            new
+                 {
+                     @class = "form-control",
+                     type = "number",
+                  step = "0.01",
+                     min = "0.01"
+                 })
+        @Html.ValidationMessageFor(m => m.Price, "",
+            new { @class = "text-danger" })
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Update Product
+    </button>
+
+    @Html.ActionLink("Back to List", "Index", "Product",
+        null, new { @class = "btn btn-secondary" })
+}
